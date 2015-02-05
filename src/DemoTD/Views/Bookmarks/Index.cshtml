@@ -1,0 +1,61 @@
+﻿@inject DemoTD.Services.BookmarkStats bStats
+@{
+     ViewBag.Title = "Bookmarks List";
+}
+
+
+
+<div class="jumbotron">
+	<h1>ASP.NET vNext Bookmarks</h1>
+</div>
+
+
+<div class="row">
+	<div class="col-lg-8">
+		@if (Model.Count == 0)
+		{
+			<h4>No Bookmarks present in the system.</h4>
+		}
+		else
+		{
+			<b>Bookmark Title:</b>
+
+			@foreach (var bookmark in Model)
+				{
+				<hr />
+
+					<div id="itemContainer">
+						<div class="DivAlignedLeft Div50px">
+							<img src="~/images/Favorite.png" alt="Favorite Logo" />
+						</div>
+
+						<div class="DivAlignedLeft Div400px">
+							@bookmark.Title &nbsp;&nbsp;
+						</div>
+
+						<div class="DivAlignedLeft">
+							@Html.ActionLink("Details", "Details", "Bookmarks", new { id = bookmark.Id }) |
+							@Html.ActionLink("Delete", "Delete", "Bookmarks", new { id = bookmark.Id })
+						</div>
+					</div>
+
+				}
+
+		}
+
+		<br />
+		<br />
+
+		<div>@Html.ActionLink("Create New Bookmark", "Create", "Bookmarks") </div>
+
+		<br />
+		<br />
+		<b>Statistics: </b>
+		<ul>
+			<li>Bookmarks: <b> @await bStats.GetBookmarksCount() </b> </li>
+			<li>Total Visits: <b> @await bStats.GetTotalHits() </b> </li>
+		</ul>
+	</div>
+
+</div>
+
